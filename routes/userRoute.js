@@ -9,6 +9,7 @@ router.post('/login' , userController.login)
 router.get('/getUserInfo', protect, userController.getUserInfo)
 router.get('/getAllUsers', userController.getAllUsers)
 router.put('/update-avatar', protect, uploadSingle('avatar'), userController.updateAvatar);
+router.post("/interested",protect, userController.interestedInProperty);
 
 
 module.exports = router

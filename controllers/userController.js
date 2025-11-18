@@ -126,11 +126,59 @@ async function updateAvatar(req, res) {
     }
 }
 
+async function interestedInProperty(req, res) {
+    try {
+        const { userId, propertyId } = req.body;
+
+        if (!userId || !propertyId) {
+            return res.status(400).json({
+                success: false,
+                message: "userId and propertyId are required",
+            });
+        }
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+
+        // prevent duplicate interest
+        if (user.interestedProperties.includes(propertyId)) {
+            return res.status(400).json({
+                success: false,
+                message: "Property already added to your interested list",
+            });
+        }
+
+        // add propertyId to user
+        user.interestedProperties.push(propertyId);
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Property saved to your interested list",
+            data: user.interestedProperties,
+        });
+
+    } catch (error) {
+        console.error("interestedInProperty error:", error);
+        res.status(500).json({
+            success: false,
+            message: "Server error",
+        });
+    }
+};
+
 
 module.exports = {
     register,
     login,
     getUserInfo,
     getAllUsers,
-    updateAvatar
+    updateAvatar,
+    interestedInProperty
 }

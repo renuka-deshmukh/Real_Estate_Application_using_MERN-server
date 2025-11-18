@@ -9,6 +9,5 @@ router.get('/getPropertyById/:id', propertyController.getPropertyById)
 router.post('/createProperty', protect, adminOnly,uploadMultiple("images", 5), propertyController.createProperty)
 router.put('updateProperty/:id',protect, adminOnly,uploadMultiple("images", 5), propertyController.updateProperty)
 router.delete('/deleteProperty/:id',protect, adminOnly, propertyController.deleteProperty)
-router.patch('/insertedInProperty/:id', propertyController.insertedInProperty)
 
 module.exports = router

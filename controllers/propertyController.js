@@ -108,30 +108,14 @@ async function deleteProperty(req, res) {
     }
 }
 
-async function insertedInProperty(req, res) {
-    try {
-        const properties = req.body;
 
-        const saved = await Property.insertMany(properties);
-
-        res.status(201).json({
-            success: true,
-            message: "Properties inserted successfully",
-            saved,
-        });
-    } catch (error) {
-        console.error("insertedInProperty error:", error);
-        res.status(500).json({ message: "Server error" });
-    }
-}
 
 module.exports = {
     getAllProperties,
     getPropertyById,
     createProperty,
     updateProperty,
-    deleteProperty,
-    insertedInProperty
+    deleteProperty
 
 
 }
